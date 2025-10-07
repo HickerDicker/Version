@@ -22,11 +22,34 @@ Windows Registry Editor Version 5.00
 "MouseThreshold2"="0"
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "HideFileExt"=dword:00000000
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.jpg]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.jpeg]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.gif]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.png]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.bmp]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.tiff]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.ico]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.tif]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.wdp]
+@="PhotoViewer.FileAssoc.Wdp"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.jfif]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.dib]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.jpe]
+@="PhotoViewer.FileAssoc.Tiff"
+[HKEY_CURRENT_USER\SOFTWARE\Classes\.jxr]
+@="PhotoViewer.FileAssoc.Tiff"
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\input\Settings]
 "InsightsEnabled"=dword:00000000
-[HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization]
-"RestrictImplicitTextCollection"=dword:00000001
-"RestrictImplicitInkCollection"=dword:00000001
 [HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32]
 @=""
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
@@ -58,4 +81,8 @@ Windows Registry Editor Version 5.00
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Orchestrator\UScheduler\EdgeUpdate]
 Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Control Panel\Mouse]
-"RawMouseThrottleDuration"=dword:00000014
+"RawMouseThrottleDuration"=dword:0000001
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"HideFileExt"=dword:00000000
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings]
+"IsDynamicSearchBoxEnabled"=dword:00000000

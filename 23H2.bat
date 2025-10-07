@@ -40,7 +40,8 @@ Echo "Disabling Write Cache Buffer"
 	)
 )
 cls
-
+Echo "Fixing BCDEDIT"
+bcdedit /deletevalue useplatformtick :: so setting this to no like in the last release is worse than yk JUST NOT MESSING WITH IT
 
 Echo "Disabling power throttling and setting the powerplan to SapphireOS Powerplan on desktops and enabling it along with setting the balanced powerplan on laptops"
 
@@ -127,10 +128,6 @@ for %%a in (
     "\Microsoft\Windows\InstallService\SmartRetry",
     "\Microsoft\Windows\InstallService\WakeupAndContinueUpdates",
     "\Microsoft\Windows\InstallService\WakeupAndScanForUpdates",
-    "\Microsoft\Windows\International\Synchronize Language Settings",
-    "\Microsoft\Windows\LanguageComponentsInstaller\Installation",
-    "\Microsoft\Windows\LanguageComponentsInstaller\ReconcileLanguageResources",
-    "\Microsoft\Windows\LanguageComponentsInstaller\Uninstallation",
     "\Microsoft\Windows\Maps\MapsUpdateTask",
     "\Microsoft\Windows\PI\Secure-Boot-Update",
     "\Microsoft\Windows\Power Efficiency Diagnostics\AnalyzeSystem",
@@ -197,7 +194,6 @@ for %%a in (
 ) do (
     C:\PostInstall\Tweaks\MinSudo.exe --NoLogo --TrustedInstaller --Privileged cmd /c "schtasks.exe /delete /f /tn %%a"
 )
-cls
 
 Echo "Network Tweaks"
 netsh int tcp set global dca=enabled >nul 2>&1
