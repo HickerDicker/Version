@@ -1,7 +1,7 @@
 @Echo off 
 Title SapphireOS 
 setlocal EnableDelayedExpansion
-
+Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "SleepStudyDisabled" /t Reg_DWORD /d "1" /f  >nul 2>&1
 Echo "Disabling Process Mitigations"
 powershell "ForEach($v in (Get-Command -Name \"Set-ProcessMitigation\").Parameters[\"Disable\"].Attributes.ValidValues){Set-ProcessMitigation -SYSTEM -Disable $v.ToString() -ErrorAction SilentlyContinue}"
 for /f "tokens=3 skip=2" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "MitigationAuditOptions"') do (
@@ -41,7 +41,6 @@ Echo "Disabling Write Cache Buffer"
 )
 cls
 
-
 Echo "Disabling power throttling and setting the powerplan to SapphireOS Powerplan on desktops and enabling it along with setting the balanced powerplan on laptops"
 
 for /f "delims=:{}" %%a in ('wmic path Win32_SystemEnclosure get ChassisTypes ^| findstr [0-9]') do set "CHASSIS=%%a"
@@ -75,6 +74,10 @@ if "%DEVICE_TYPE%" == "LAPTOP" (
 	EnableIdlePowerManagement
 	IdleInWorkingState
 	) do for /f "delims=" %%b in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum" /s /f "%%a" ^| findstr "HKEY"') do Reg.exe add "%%b" /v "%%a" /t REG_DWORD /d "0" /f > NUL 2>&1
+	mkdir C:\Windows\Modules
+	curl -L -o "C:\Windows\Modules\SapphireOS.pow" https://github.com/HickerDicker/Version/raw/refs/heads/main/SapphireOS.pow
+	powercfg -import C:\Windows\Modules\SapphireOS.pow 3669b9e3-17ce-4e11-9c13-6e9e0724b157
+	powercfg -setactive 3669b9e3-17ce-4e11-9c13-6e9e0724b157
     cls
 )
 
@@ -90,120 +93,121 @@ for %%a in (
     "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319 64",
     "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319 Critical",
     "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319",
+    "\Microsoft\Windows\AppID\EDP Policy Manager",
+    "\Microsoft\Windows\Application Experience\MareBackup",
     "\Microsoft\Windows\Application Experience\StartupAppTask",
+    "\Microsoft\Windows\ApplicationData\DsSvcCleanup",
     "\Microsoft\Windows\Autochk\Proxy",
+    "\Microsoft\Windows\BitLocker\BitLocker Encrypt All Drives",
+    "\Microsoft\Windows\BitLocker\BitLocker MDM Policy Refresh",
     "\Microsoft\Windows\BrokerInfrastructure\BgTaskRegistrationMaintenanceTask",
-    "\Microsoft\Windows\Diagnosis\Scheduled",
-    "\Microsoft\Windows\DiskCleanup\SilentCleanup",
-    "\Microsoft\Windows\DiskFootprint\StorageSense",
-    "\Microsoft\Windows\International\Synchronize Language Settings",
-    "\Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTaskLogon",
-    "\Microsoft\Windows\Time Synchronization\ForceSynchronizeTime",
-    "\Microsoft\Windows\Time Synchronization\SynchronizeTime",
-    "\Microsoft\Windows\UPnP\UPnPHostConfig",
-    "\Microsoft\Windows\Windows Filtering Platform\BfeOnServiceStartTypeChange",
     "\Microsoft\Windows\CertificateServicesClient\AikCertEnrollTask",
     "\Microsoft\Windows\CertificateServicesClient\KeyPreGenTask",
+    "\Microsoft\Windows\Chkdsk\ProactiveScan",
+    "\Microsoft\Windows\Chkdsk\SyspartRepair",
+    "\Microsoft\Windows\Clip\License Validation",
+    "\Microsoft\Windows\CloudExperienceHost\CreateObjectTask",
+    "\Microsoft\Windows\Data Integrity Scan\Data Integrity Check and Scan",
+    "\Microsoft\Windows\Data Integrity Scan\Data Integrity Scan for Crash Recovery",
     "\Microsoft\Windows\Defrag\ScheduledDefrag",
+    "\Microsoft\Windows\Device Information\Device",
+    "\Microsoft\Windows\Device Information\Device User",
     "\Microsoft\Windows\Device Setup\Metadata Refresh",
+    "\Microsoft\Windows\Diagnosis\RecommendedTroubleshootingScanner",
+    "\Microsoft\Windows\Diagnosis\Scheduled",
+    "\Microsoft\Windows\Diagnosis\UnexpectedCodepath",
+    "\Microsoft\Windows\DirectX\DirectXDatabaseUpdater",
+    "\Microsoft\Windows\DiskCleanup\SilentCleanup",
     "\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector",
     "\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticResolver",
     "\Microsoft\Windows\DiskFootprint\Diagnostics",
+    "\Microsoft\Windows\DiskFootprint\StorageSense",
+    "\Microsoft\Windows\FileHistory\File History (maintenance mode)",
     "\Microsoft\Windows\InstallService\ScanForUpdates",
     "\Microsoft\Windows\InstallService\ScanForUpdatesAsUser",
     "\Microsoft\Windows\InstallService\SmartRetry",
+    "\Microsoft\Windows\InstallService\WakeupAndContinueUpdates",
+    "\Microsoft\Windows\InstallService\WakeupAndScanForUpdates",
+    "\Microsoft\Windows\Maps\MapsUpdateTask",
+    "\Microsoft\Windows\PCRPF\Pcr Prediction Framework Firmware Update Task",
+    "\Microsoft\Windows\PI\Secure-Boot-Update",
+    "\Microsoft\Windows\Power Efficiency Diagnostics\AnalyzeSystem",
     "\Microsoft\Windows\Registry\RegIdleBackup",
     "\Microsoft\Windows\Security\Pwdless\IntelligentPwdlessTask",
+    "\Microsoft\Windows\Shell\UpdateUserPictureTask",
+    "\Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTaskLogon",
     "\Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTaskNetwork",
+    "\Microsoft\Windows\Spaceport\SpaceAgentTask",
+    "\Microsoft\Windows\Spaceport\SpaceManagerTask",
+    "\Microsoft\Windows\Speech\SpeechModelDownloadTask",
     "\Microsoft\Windows\StateRepository\MaintenanceTasks",
     "\Microsoft\Windows\Subscription\EnableLicenseAcquisition",
     "\Microsoft\Windows\Subscription\LicenseAcquisition",
     "\Microsoft\Windows\Sysmain\ResPriStaticDbSync",
     "\Microsoft\Windows\Sysmain\WsSwapAssessmentTask",
-    "\Microsoft\Windows\WDI\ResolutionHost",
-    "\Microsoft\Windows\Windows Error Reporting\QueueReporting",
-    "\Microsoft\Windows\Windows Filtering Platform\BfeOnServiceStartTypeChange",
-    "\Microsoft\Windows\Wininet\CacheTask",
-    "\Microsoft\Windows\TaskScheduler",
-    "\Microsoft\Windows\WaaSMedic",
-    "\Microsoft\Windows\WindowsUpdate",
-    "\Microsoft\Windows\WindowsUpdate\Scheduled Start",
-    "\Microsoft\Windows\UpdateOrchestrator\Report policies",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task",
-    "\Microsoft\Windows\UpdateOrchestrator\USO_UxBroker",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Wake To Work",
-    "\Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work",
-    "\Microsoft\Windows\InstallService\WakeUpAndContinueUpdates",
-    "\Microsoft\Windows\InstallService\WakeUpAndScanForUpdates",
-    "\Microsoft\Windows\Maps\MapsUpdateTask",
-    "\Microsoft\Windows\PI\Secure-Boot-Update",
-    "\Microsoft\Windows\Shell\UpdateUserPictureTask",
-    "\Microsoft\Windows\UNP\RunUpdateNotificationMgr",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Work",
-    "\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScanAfterUpdate",
-    "\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_LicenseAccepted",
-    "\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_OobeAppReady",
-    "\Microsoft\Windows\UpdateOrchestrator\UiEOrchestrator",
-    "\Microsoft\Windows\UpdateOrchestrator\UUS Failover Task",
-    "\Microsoft\Windows\Windows Media Sharing\UpdateLibrary",
-    "\Microsoft\Windows\WindowsUpdate\Refresh Group Policy Cache",
-    "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator",
-    "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip",
-    "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser",
-    "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser Exp",
-    "\Microsoft\Windows\ApplicationData\DsSvcCleanup",
-    "\Microsoft\Windows\BitLocker\BitLocker Encrypt All Drives",
-    "\Microsoft\Windows\BitLocker\BitLocker MDM Policy Refresh",
-    "\Microsoft\Windows\Chkdsk\ProactiveScan",
-    "\Microsoft\Windows\Chkdsk\SyspartRepair",
-    "\Microsoft\Windows\Data Integrity Scan\Data Integrity Check And Scan",
-    "\Microsoft\Windows\Data Integrity Scan\Data Integrity Scan",
-    "\Microsoft\Windows\Data Integrity Scan\Data Integrity Scan For Crash Recovery",
-    "\Microsoft\Windows\LanguageComponentsInstaller\Installation",
-    "\Microsoft\Windows\LanguageComponentsInstaller\ReconcileLanguageResources",
-    "\Microsoft\Windows\LanguageComponentsInstaller\Uninstallation",
+    "\Microsoft\Windows\SystemRestore\SR",
     "\Microsoft\Windows\TPM\Tpm-HASCertRetr",
     "\Microsoft\Windows\TPM\Tpm-Maintenance",
     "\Microsoft\Windows\TPM\Tpm-PreAttestationHealthCheck",
-    "\Microsoft\Windows\SystemRestore\SR",
-    "\Microsoft\Windows\Speech\SpeechModelDownloadTask",
-    "\Microsoft\Windows\SpacePort\SpaceAgentTask",
-    "\Microsoft\Windows\SpacePort\SpaceManagerTask",
-    "\Microsoft\Windows\Power Efficiency Diagnostics\AnalyzeSystem",
-    "\Microsoft\Windows\CloudExperienceHost\CreateObjectTask",
-    "\Microsoft\Windows\Diagnosis\RecommendedTroubleshootingScanner",
-    "\Microsoft\Windows\Diagnosis\UnexpectedCodePath",
-    "\Microsoft\Windows\FileHistory\File History (maintenance mode)",
-    "\Microsoft\Windows\Feedback\Siuf\DmClient",
-    "\Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload",
-    "\Microsoft\Windows\Device Information\Device",
-    "\Microsoft\Windows\Device Information\Device User",
-    "\Microsoft\Windows\AppID\EDP Policy Manager",
+    "\Microsoft\Windows\Time Synchronization\ForceSynchronizeTime",
+    "\Microsoft\Windows\Time Synchronization\SynchronizeTime",
+    "\Microsoft\Windows\UPnP\UPnPHostConfig",
+    "\Microsoft\Windows\WDI\ResolutionHost",
     "\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance",
     "\Microsoft\Windows\Windows Defender\Windows Defender Cleanup",
     "\Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan",
     "\Microsoft\Windows\Windows Defender\Windows Defender Verification",
-    "\Microsoft\Windows\Application Experience\MareBackup"
+    "\Microsoft\Windows\Windows Error Reporting\QueueReporting",
+    "\Microsoft\Windows\Windows Filtering Platform\BfeOnServiceStartTypeChange",
+    "\Microsoft\Windows\Windows Media Sharing\UpdateLibrary",
+    "\Microsoft\Windows\Wininet\CacheTask"
 ) do (
     C:\PostInstall\Tweaks\MinSudo.exe --NoLogo --TrustedInstaller --Privileged cmd /c "schtasks.exe /change /disable /TN %%a"
 )
 
 for %%a in (
+    "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser",
+    "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser Exp",
+    "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator",
+    "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip",
+    "\Microsoft\Windows\Feedback\Siuf\DmClient",
+    "\Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload",
     "\Microsoft\Windows\TaskScheduler",
-    "\Microsoft\Windows\WaaSMedic",
-    "\Microsoft\Windows\WindowsUpdate",
-    "\Microsoft\Windows\WindowsUpdate\Scheduled Start",
     "\Microsoft\Windows\UpdateOrchestrator\Report policies",
+    "\Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work",
     "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan",
     "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task",
-    "\Microsoft\Windows\UpdateOrchestrator\USO_UxBroker",
     "\Microsoft\Windows\UpdateOrchestrator\Schedule Wake To Work",
-    "\Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work"
+    "\Microsoft\Windows\UpdateOrchestrator\Schedule Work",
+    "\Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work",
+    "\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScanAfterUpdate",
+    "\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_LicenseAccepted",
+    "\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_OobeAppReady",
+    "\Microsoft\Windows\UpdateOrchestrator\UIEOrchestrator",
+    "\Microsoft\Windows\UpdateOrchestrator\USO_UxBroker",
+    "\Microsoft\Windows\UpdateOrchestrator\Uus Failover Task",
+    "\Microsoft\Windows\WaaSMedic",
+    "\Microsoft\Windows\WindowsUpdate",
+    "\Microsoft\Windows\WindowsUpdate\Refresh Group Policy Cache",
+    "\Microsoft\Windows\WindowsUpdate\Scheduled Start"
 ) do (
     C:\PostInstall\Tweaks\MinSudo.exe --NoLogo --TrustedInstaller --Privileged cmd /c "schtasks.exe /delete /f /tn %%a"
 )
+cls
+
+Echo "Disabling Exclusive Mode On Audio Devices"
+for /f "delims=" %%a in ('reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture') do Reg.exe add "%%a\Properties" /v "{b3f8fa53-0004-438e-9003-51a46e139bfc},3" /t REG_DWORD /d "0" /f >nul 2>&1
+for /f "delims=" %%a in ('reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture') do Reg.exe add "%%a\Properties" /v "{b3f8fa53-0004-438e-9003-51a46e139bfc},4" /t REG_DWORD /d "0" /f >nul 2>&1
+for /f "delims=" %%a in ('reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render') do Reg.exe add "%%a\Properties" /v "{b3f8fa53-0004-438e-9003-51a46e139bfc},3" /t REG_DWORD /d "0" /f >nul 2>&1
+for /f "delims=" %%a in ('reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render') do Reg.exe add "%%a\Properties" /v "{b3f8fa53-0004-438e-9003-51a46e139bfc},4" /t REG_DWORD /d "0" /f >nul 2>&1
+cls
+
+Echo "Reset Firewall Rules"
+reg delete "HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules" /f && reg add "HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules" /f >nul 2>&1
+cls
+
+Echo "Removing leftover devices"
+C:\PostInstall\Tweaks\DeviceCleanupCmd.exe * -s >nul 2>&1
 cls
 
 Echo "Network Tweaks"
@@ -244,6 +248,11 @@ C:\PostInstall\Tweaks\DevManView.exe /disable "Numeric Data Processor" > NUL 2>&
 C:\PostInstall\Tweaks\DevManView.exe /disable "Communications Port (COM1)" > NUL 2>&1
 C:\PostInstall\Tweaks\DevManView.exe /disable "Microsoft RRAS Root Enumerator" > NUL 2>&1
 C:\PostInstall\Tweaks\DevManView.exe /disable "Microsoft GS Wavetable Synth" > NUL 2>&1
+cls
+
+Echo "Changing fsutil behaviors"
+fsutil behavior set disable8dot3 1 > NUL 2>&1
+fsutil behavior set disablelastaccess 1 > NUL 2>&1
 cls
 
 Echo "Disable Driver PowerSaving"
@@ -422,6 +431,24 @@ cls
 powershell disable-netadapterbinding -name "*" -componentid vmware_bridge, ms_lldp, ms_lltdio, ms_implat, ms_tcpip6, ms_rspndr, ms_server, ms_msclient
 cls
 
+Echo "Enabling MSI mode & set to undefined"
+for /f %%i in ('wmic path Win32_USBController get PNPDeviceID^| findstr /L "PCI\VEN_"') do reg add "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v "MSISupported" /t REG_DWORD /d "1" /f
+for /f %%i in ('wmic path Win32_USBController get PNPDeviceID^| findstr /L "PCI\VEN_"') do reg delete "HKLM\SYSTEM\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\Affinity Policy" /v "DevicePriority" /f >nul 2>nul
+:: Probably will be reset by installing GPU driver
+for /f %%i in ('wmic path Win32_VideoController get PNPDeviceID^| findstr /L "PCI\VEN_"') do reg add "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v "MSISupported" /t REG_DWORD /d "1" /f
+for /f %%i in ('wmic path Win32_VideoController get PNPDeviceID^| findstr /L "PCI\VEN_"') do reg add "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\Affinity Policy" /v "DevicePriority" /f >nul 2>nul
+for /f %%i in ('wmic path Win32_NetworkAdapter get PNPDeviceID^| findstr /L "PCI\VEN_"') do reg add "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v "MSISupported" /t REG_DWORD /d "1" /f
+for /f %%i in ('wmic path Win32_IDEController get PNPDeviceID^| findstr /L "PCI\VEN_"') do reg add "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v "MSISupported" /t REG_DWORD /d "1" /f
+for /f %%i in ('wmic path Win32_IDEController get PNPDeviceID^| findstr /L "PCI\VEN_"') do reg add "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\Affinity Policy" /v "DevicePriority" /f >nul 2>nul
+for /f %%i in ('wmic path Win32_NetworkAdapter get PNPDeviceID^| findstr /L "PCI\VEN_"') do reg add "HKLM\System\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\Affinity Policy" /v "DevicePriority" /f >nul 2>nul
+:: Fix VMware
+wmic computersystem get manufacturer /format:value | findstr /i /C:VMWare && (
+    for /f %%a in ('wmic path Win32_NetworkAdapter get PNPDeviceID ^| findstr /l "PCI\VEN_"') do (
+        reg add "HKLM\SYSTEM\CurrentControlSet\Enum\%%a\Device Parameters\Interrupt Management\Affinity Policy" /v "DevicePriority" /t REG_DWORD /d "2"  /f > nul 2>nul
+    )
+)
+cls
+
 Echo "Disabling DMA Remapping"
 for %%a in (DmaRemappingCompatible) do for /f "delims=" %%b in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services" /s /f "%%a" ^| findstr "HKEY"') do Reg.exe add "%%b" /v "%%a" /t REG_DWORD /d "0" /f >nul 2>&1
 cls
@@ -432,6 +459,10 @@ cls
 
 Echo "Disabling StorPort Idle"
 for /f "tokens=*" %%s in ('reg query "HKLM\SYSTEM\CurrentControlSet\Enum" /s /f "StorPort" ^| findstr /e "StorPort"') do Reg.exe add "%%s" /v "EnableIdlePowerManagement" /t REG_DWORD /d "0" /f >nul 2>&1
+cls
+
+Echo "RW Fix for w11"
+Reg add "HKLM\SYSTEM\CurrentControlSet\Control\CI\Config" /v "VulnerableDriverBlocklistEnable" /t REG_DWORD /d "0" /f >NUL 2>&1
 cls
 
 Echo "Disabling Drivers and Services"
@@ -706,24 +737,31 @@ for %%z in (
 ) do (
 C:\PostInstall\Tweaks\MinSudo.exe --NoLogo --TrustedInstaller --Privileged cmd /c "Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\%%z" /v "Start" /t REG_DWORD /d "4" /f"
 )
+Reg.exe add "HKCU\Software\SapphireTool" /v "Services" /t REG_SZ /d "SapphireOS" /f >nul 2>&1
 
-Echo "Disable Background apps"
-Reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications" /v "GlobalUserDisabled" /t Reg_DWORD /d "1" /f >nul 2>&1
-Reg add "HKLM\Software\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsRunInBackground" /t Reg_DWORD /d "2" /f >nul 2>&1
-Reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "BackgroundAppGlobalToggle" /t Reg_DWORD /d "0" /f >nul 2>&1
+Echo "Fix Start menu on first reboot"
+cmd /c "start C:\Windows\explorer.exe"
+taskkill /f /im explorer.exe >nul 2>&1
+taskkill /f /im explorer.exe >nul 2>&1
+cmd /c "start C:\Windows\explorer.exe"
 cls
 
 Echo "fixing languages if needed"
 REG ADD HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate /v DoNotConnectToWindowsUpdateInternetLocations /t REG_DWORD /d 0 /f >nul 2>&1
 REG ADD HKLM\Software\Policies\Microsoft\Windows\WindowsUpdate\AU /v UseWUServer /t REG_DWORD /d 0 /f >nul 2>&1
 cls
+
+Echo "Attempting To Disable MemoryCompression"
+C:\PostInstall\Tweaks\MinSudo.exe --NoLogo --TrustedInstaller --Privileged cmd /c "PowerShell Disable-MMAgent -MemoryCompression"
+cls
+
 msg * Tweaks applied restart your pc
 
 Echo "Cleanup"
 
 del /q/f/s %TEMP%\*
 del /q/f/s %WINDIR%\TEMP\*
-del /q/f/s %WINDIR%\Modules\*
+rd /s /q "%WINDIR%\Modules"
 cls
 
 start /b "" cmd /c del "%~f0"&exit /b
