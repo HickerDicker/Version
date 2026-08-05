@@ -47,116 +47,6 @@ for /f "delims=" %%u in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services\NetB
 )
 cls
 
-Echo "Optimizing Scheduled Tasks"
-for %%a in (
-    "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319 64 Critical",
-    "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319 64",
-    "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319 Critical",
-    "\Microsoft\Windows\.NET Framework\.NET Framework NGEN v4.0.30319",
-    "\Microsoft\Windows\Application Experience\MareBackup",
-    "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser",
-    "\Microsoft\Windows\Application Experience\StartupAppTask",
-    "\Microsoft\Windows\ApplicationData\DsSvcCleanup",
-    "\Microsoft\Windows\AppID\EDP Policy Manager",
-    "\Microsoft\Windows\Autochk\Proxy",
-    "\Microsoft\Windows\BitLocker\BitLocker Encrypt All Drives",
-    "\Microsoft\Windows\BitLocker\BitLocker MDM Policy Refresh",
-    "\Microsoft\Windows\BrokerInfrastructure\BgTaskRegistrationMaintenanceTask",
-    "\Microsoft\Windows\CertificateServicesClient\AikCertEnrollTask",
-    "\Microsoft\Windows\CertificateServicesClient\KeyPreGenTask",
-    "\Microsoft\Windows\Chkdsk\ProactiveScan",
-    "\Microsoft\Windows\Chkdsk\SyspartRepair",
-    "\Microsoft\Windows\CloudExperienceHost\CreateObjectTask",
-    "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator",
-    "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip",
-    "\Microsoft\Windows\Data Integrity Scan\Data Integrity Check and Scan",
-    "\Microsoft\Windows\Data Integrity Scan\Data Integrity Scan",
-    "\Microsoft\Windows\Data Integrity Scan\Data Integrity Scan for Crash Recovery",
-    "\Microsoft\Windows\Defrag\ScheduledDefrag",
-    "\Microsoft\Windows\Device Information\Device",
-    "\Microsoft\Windows\Device Information\Device User",
-    "\Microsoft\Windows\Device Setup\Metadata Refresh",
-    "\Microsoft\Windows\Diagnosis\RecommendedTroubleshootingScanner",
-    "\Microsoft\Windows\Diagnosis\Scheduled",
-    "\Microsoft\Windows\DiskCleanup\SilentCleanup",
-    "\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector",
-    "\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticResolver",
-    "\Microsoft\Windows\DiskFootprint\Diagnostics",
-    "\Microsoft\Windows\DiskFootprint\StorageSense",
-    "\Microsoft\Windows\Feedback\Siuf\DmClient",
-    "\Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload",
-    "\Microsoft\Windows\FileHistory\File History (maintenance mode)",
-    "\Microsoft\Windows\InstallService\ScanForUpdates",
-    "\Microsoft\Windows\InstallService\ScanForUpdatesAsUser",
-    "\Microsoft\Windows\InstallService\SmartRetry",
-    "\Microsoft\Windows\InstallService\WakeupAndContinueUpdates",
-    "\Microsoft\Windows\InstallService\WakeupAndScanForUpdates",
-    "\Microsoft\Windows\Maps\MapsUpdateTask",
-    "\Microsoft\Windows\PI\Secure-Boot-Update",
-    "\Microsoft\Windows\Power Efficiency Diagnostics\AnalyzeSystem",
-    "\Microsoft\Windows\Registry\RegIdleBackup",
-    "\Microsoft\Windows\Security\Pwdless\IntelligentPwdlessTask",
-    "\Microsoft\Windows\Shell\UpdateUserPictureTask",
-    "\Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTaskLogon",
-    "\Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTaskNetwork",
-    "\Microsoft\Windows\Spaceport\SpaceAgentTask",
-    "\Microsoft\Windows\Spaceport\SpaceManagerTask",
-    "\Microsoft\Windows\Speech\SpeechModelDownloadTask",
-    "\Microsoft\Windows\StateRepository\MaintenanceTasks",
-    "\Microsoft\Windows\Subscription\EnableLicenseAcquisition",
-    "\Microsoft\Windows\Subscription\LicenseAcquisition",
-    "\Microsoft\Windows\Sysmain\ResPriStaticDbSync",
-    "\Microsoft\Windows\Sysmain\WsSwapAssessmentTask",
-    "\Microsoft\Windows\SystemRestore\SR",
-    "\Microsoft\Windows\TaskScheduler",
-    "\Microsoft\Windows\Time Synchronization\ForceSynchronizeTime",
-    "\Microsoft\Windows\Time Synchronization\SynchronizeTime",
-    "\Microsoft\Windows\TPM\TPM-HASCertRetr",
-    "\Microsoft\Windows\TPM\TPM-Maintenance",
-    "\Microsoft\Windows\UNP\RunUpdateNotificationMgr",
-    "\Microsoft\Windows\UPnP\UPnPHostConfig",
-    "\Microsoft\Windows\UpdateOrchestrator\Report policies",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Wake To Work",
-    "\Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work",
-    "\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScanAfterUpdate",
-    "\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_LicenseAccepted",
-    "\Microsoft\Windows\UpdateOrchestrator\StartOobeAppsScan_OobeAppReady",
-    "\Microsoft\Windows\UpdateOrchestrator\UieOrchestrator",
-    "\Microsoft\Windows\UpdateOrchestrator\USO_UxBroker",
-    "\Microsoft\Windows\UpdateOrchestrator\UUS Failover Task",
-    "\Microsoft\Windows\WaaSMedic",
-    "\Microsoft\Windows\WDI\ResolutionHost",
-    "\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance",
-    "\Microsoft\Windows\Windows Defender\Windows Defender Cleanup",
-    "\Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan",
-    "\Microsoft\Windows\Windows Defender\Windows Defender Verification",
-    "\Microsoft\Windows\Windows Error Reporting\QueueReporting",
-    "\Microsoft\Windows\Windows Filtering Platform\BfeOnServiceStartTypeChange",
-    "\Microsoft\Windows\Windows Media Sharing\UpdateLibrary",
-    "\Microsoft\Windows\WindowsUpdate",
-    "\Microsoft\Windows\WindowsUpdate\Refresh Group Policy Cache",
-    "\Microsoft\Windows\WindowsUpdate\Scheduled Start",
-    "\Microsoft\Windows\Wininet\CacheTask"
-) do (
-    C:\PostInstall\Tweaks\MinSudo.exe --NoLogo --TrustedInstaller --Privileged cmd /c "schtasks.exe /change /disable /TN %%a"
-)
-
-for %%a in (
-    "\Microsoft\Windows\TaskScheduler",
-    "\Microsoft\Windows\WaaSMedic",
-    "\Microsoft\Windows\WindowsUpdate",
-    "\Microsoft\Windows\WindowsUpdate\Scheduled Start",
-    "\Microsoft\Windows\UpdateOrchestrator\Report policies",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task",
-    "\Microsoft\Windows\UpdateOrchestrator\USO_UxBroker",
-    "\Microsoft\Windows\UpdateOrchestrator\Schedule Wake To Work",
-    "\Microsoft\Windows\UpdateOrchestrator\Start Oobe Expedite Work"
-) do (
-    C:\PostInstall\Tweaks\MinSudo.exe --NoLogo --TrustedInstaller --Privileged cmd /c "schtasks.exe /delete /f /tn %%a"
-)
 cls
 Echo "Disabling Exclusive Mode On Audio Devices"
 for /f "delims=" %%a in ('reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture') do Reg.exe add "%%a\Properties" /v "{b3f8fa53-0004-438e-9003-51a46e139bfc},3" /t REG_DWORD /d "0" /f >nul 2>&1
@@ -428,268 +318,216 @@ Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dhcp" /v "Depe
 Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dnscache" /v "DependOnService" /t REG_MULTI_SZ /d "nsi" /f
 Reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" /v "InactivityShutdownDelay" /t REG_DWORD /d "4294967295" /f
 for %%z in (
-      AppVClient
-      AJRouter
-      AppIDSvc
-      DiagTrack
-      DsmSvc
-      DialogBlockingService
-      Diagsvc
-      autotimesvc
-      W32Time
-      diagnosticshub.standardcollector.service
-      DPS
-      DsSvc
-      DusmSvc
-      MsKeyboardFilter
-      icssvc
-      IKEEXT
-      PcaSvc
-      ShellHWDetection
-      SysMain
-      Themes
-      TrkWks
-      tzautoupdate
-      OneSyncSvc
-      WdiSystemHost
-      WdiServiceHost
-      SensorDataService
-      SensrSvc
-      SensorService
-      Beep
-      cdfs
-      cdrom
-      acpiex
-      acpipagr
-      acpipmi
-      acpitime
-      cnghwassist
-      GpuEnergyDrv
-      Telemetry
-      VerifierExt
-      udfs
-      MsLldp
-      lltdio
-      NdisVirtualBus
-      NDU
-      luafv
-      fvevol
-      UsoSvc
-      cbdhsvc
-      BcastDVRUserService
-      rdyboost
-      rdpbus
-      umbus
-      vdrvroot
-      Vid
-      CompositeBus
-      rspndr
-      NdisCap
-      NetBIOS
-      NetBT
-      spaceport
-      VaultSvc
-      EventSystem
-      storqosflt
-      bam
-      bowser
-      WarpJITSvc
-      Wecsvc
-      dmwappushservice
-      GraphicsPerfSvc
-      WMPNetworkSvc
-      TermService
-      UmRdpService
-      UnistoreSvc
-      PimIndexMaintenanceSvc
-      UserDataSvc
-      3ware
-      arcsas
-      buttonconverter
-      circlass
-      Dfsc
-      ErrDev
-      mrxsmb
-      mrxsmb20
-      PEAUTH
-      QWAVEdrv
-      srv
-      SiSRaid2
-      SiSRaid4
-      Tcpip6
-      tcpipreg
-      vsmraid
-      VSTXRAID
-      wcnfs
-      WindowsTrustedRTProxy
-      SstpSvc
-      SSDPSRV
-      SmsRouter
-      CldFlt
-      DisplayEnhancementService
-      iphlpsvc
-      IpxlatCfgSvc
-      NetTcpPortSharing
-      KtmRm
-      LanmanWorkstation
-      LanmanServer
-      lmhosts
-      MSDTC
-      QWAVE
-      RmSvc
-      RFCOMM
-      BthEnum
-      bthleenum
-      BTHMODEM
-      BthA2dp
-      microsoft_bluetooth_avrcptransport
-      BthHFEnum
-      BTAGService
-      bthserv
-      BluetoothUserService
-      BthAvctpSvc
-      vmickvpexchange
-      vmicguestinterface
-      vmicshutdown
-      vmicheartbeat
-      vmicvmsession
-      vpci
-      TsUsbFlt
-      tsusbhub
-      storflt
-      RDPDR
-      RdpVideominiport
-      bttflt
-      HidBth
-      BthMini
-      BTHPORT
-      BTHUSB
-      vmicrdv
-      vmictimesync
-      vmicvss
-      hyperkbd
-      hypervideo
-      gencounter
-      vmgid
-      storflt
-      hvservice
-      hvcrash
-      HvHost
-      lfsvc
-      AxInstSV
-      AarSvc
-      cloudidsvc
-      CldFlt
-      defragsvc
-      diagsvc
-      diagnosticshub.standardcollector.service
-      dam
-      ehstorclass
-      ehstortcgdrv
-      embeddedmode
-      FontCache
-      FontCache3.0.0.0
-      IpxlatCfgSvc
-      lfsvc
-      lltdio
-      luafv
-      lmhosts
-      MSiSCSI
-      MessagingService
-      mslldp
-      MixedRealityOpenXRSvc
-      microsoft_bluetooth_avrcptransport
-      MapsBroker
-      Ndu
-      NetBIOS
-      NetBT
-      NetTcpPortSharing
-      OneSyncSvc
-      UsoSvc
-      PcaSvc
-      PimIndexMaintenanceSvc
-      printworkflowusersvc
-      PenService
-      P9RdrService
-      PNRPsvc
-      p2psvc
-      p2pimsvc
-      PhoneSvc
-      perceptionsimulation
-      PeerDistSvc
-      QWAVE
-      QWAVEdrv
-      rspndr
-      rdyboost
-      rdpbus
-      RasAuto
-      RasAcd
-      RDPDR
-      RdpVideominiport
-      RmSvc
-      RFCOMM
-      SharedAccess
-      SysMain
-      ShellHWDetection
-      SCardSvr
-      ScDeviceEnum
-      SCPolicySvc
-      scfilter
-      spectrum
-      SharedRealitySvc
-      spooler
-      SEMgrSvc
-      SSDPSRV
-      storflt
-      SmsRouter
-      spaceport
-      Themes
-      TrkWks
-      tzautoupdate
-      troubleshootingsvc
-      TapiSrv
-      terminpt
-      TsUsbGD
-      TermService
-      tcpipreg
-      TsUsbFlt
-      tsusbhub
-      UserDataSvc
-      UnistoreSvc
-      udfs
-      UmRdpService
-      VacSvc
-      Vid
-      vmickvpexchange
-      vmicguestinterface
-      vmicshutdown
-      vmicheartbeat
-      vmicvmsession
-      vpci
-      vmicrdv
-      vmictimesync
-      vmicvss
-      vmgid
-      VSS
-      W32Time
-      WaaSMedicSvc
-      WalletService
-      wbengine
-      WpnService
-      WbioSrvc
-      WEPHOSTSVC
-      WerSvc
-      wercplsupport
-      WSearch
-      WPDBusEnum
-      wdiservicehost
-      wdisystemhost
-      WMPNetworkSvc
-      WpcMonSvc
+	AppVClient
+	AJRouter
+	AppIDSvc
+	DsmSvc
+	DialogBlockingService
+	autotimesvc
+	W32Time
+	DPS
+	InventorySvc
+	DsSvc
+	DusmSvc
+	MsKeyboardFilter
+	icssvc
+	ShellHWDetection
+	TrkWks
+	tzautoupdate
+	WdiSystemHost
+	WdiServiceHost
+	SensorDataService
+	SensrSvc
+	SensorService
+	Beep
+	cdfs
+	cdrom
+	acpiex
+	cnghwassist
+	Telemetry
+	VerifierExt
+	udfs
+	MsLldp
+	lltdio
+	NDU
+	fvevol
+	UsoSvc
+	cbdhsvc
+	BcastDVRUserService
+	rdyboost
+	rdpbus
+	umbus
+	vdrvroot
+	Vid
+	CompositeBus
+	rspndr
+	NdisCap
+	NetBIOS
+	NetBT
+	spaceport
+	VaultSvc
+	EventSystem
+	storqosflt
+	bowser
+	WarpJITSvc
+	Wecsvc
+	GraphicsPerfSvc
+	WMPNetworkSvc
+	3ware
+	arcsas
+	buttonconverter
+	circlass
+	Dfsc
+	ErrDev
+	mrxsmb
+	mrxsmb20
+	PEAUTH
+	QWAVEdrv
+	srv
+	SiSRaid2
+	SiSRaid4
+	Tcpip6
+	tcpipreg
+	vsmraid
+	VSTXRAID
+	wcnfs
+	WindowsTrustedRTProxy
+	SSDPSRV
+	SmsRouter
+	CldFlt
+	DisplayEnhancementService
+	IpxlatCfgSvc
+	NetTcpPortSharing
+	KtmRm
+	LanmanWorkstation
+	LanmanServer
+	lmhosts
+	MSDTC
+	QWAVE
+	RmSvc
+	vmickvpexchange
+	vmicguestinterface
+	vmicshutdown
+	vmicheartbeat
+	vmicvmsession
+	vpci
+	TsUsbFlt
+	tsusbhub
+	storflt
+	RDPDR
+	RdpVideominiport
+	bttflt
+	vmicrdv
+	vmictimesync
+	vmicvss
+	hyperkbd
+	hypervideo
+	gencounter
+	vmgid
+	hvservice
+	hvcrash
+	HvHost
+	AxInstSV
+	AarSvc
+	cloudidsvc
+	defragsvc
+	ehstorclass
+	ehstortcgdrv
+	embeddedmode
+	FontCache
+	MSiSCSI
+	Ndu
+	printworkflowusersvc
+	PenService
+	P9RdrService
+	PNRPsvc
+	p2psvc
+	p2pimsvc
+	PhoneSvc
+	PeerDistSvc
+	RasAuto
+	RasAcd
+	SCardSvr
+	ScDeviceEnum
+	SCPolicySvc
+	scfilter
+	SEMgrSvc
+	TapiSrv
+	terminpt
+	TsUsbGD
+	VSS
+	WaaSMedicSvc
+	WalletService
+	wbengine
+	WpnService
+	WbioSrvc
+	WEPHOSTSVC
+	WPDBusEnum
+	wdiservicehost
+	wdisystemhost
+	AppvStrm
+	AppvVemgr
+	AppvVfs
+	CimFS
+	CloudBackupRestoreSvc
+	Parport
+	pcmcia
+	ReFS
+	refsdedupsvc
+	ReFSv1
+	UnionFS
+	WpcMonSvc
+	PrintNotify
+	printworkflowusersvc
+	usbprint
+	PrintScanBrokerService
+	Spooler
+	PrintDeviceConfigurationService
+	BthA4dp
+	BthEnum
+	BthHFEnum
+	BthLEEnum
+	BTHMODEM
+	Microsoft_Bluetooth_AvrcpTransport
+	BluetoothUserService
+	BthAvctpSvc
+	RFCOMM
+	bthserv
+	BTAGService
+	DevicesFlowUserSvc
+	BTHUSB
+	BTHPORT
+	BthMini
+	HidBth
+	DeviceAssociationBroker
+	DeviceAssociationService
+	SstpSvc
+	IKEEXT
+	iphlpsvc
+	NdisVirtualBus
+	RasMan
+	WinHttpAutoProxySvc
+	acpipagr
+	GpuEnergyDrv
+	AcpiPmi
+	PRM
+	acpitime
+	bam
+	dam
+	WmiAcpi
+	serenum
+	sermouse
+	serial
+	luafv
+	CDPsvc
+	CDPuserSvc
 ) do (
 C:\PostInstall\Tweaks\MinSudo.exe --NoLogo --TrustedInstaller --Privileged cmd /c "Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\%%z" /v "Start" /t REG_DWORD /d "4" /f"
 )
 Reg.exe add "HKCU\Software\SapphireTool" /v "Services" /t REG_SZ /d "SapphireOS" /f >nul 2>&1
+
+curl -L -o "C:\Windows\Modules\ScheduledTasksDisabler.exe" https://github.com/HickerDicker/Version/raw/refs/heads/main/ScheduledTasksDisabler.exe
+C:\Windows\Modules\ScheduledTasksDisabler.exe
 
 Echo "Disabling power throttling and setting the powerplan to SapphireOS Powerplan on desktops and enabling it along with setting the balanced powerplan on laptops"
 
@@ -703,33 +541,15 @@ if "%DEVICE_TYPE%" == "LAPTOP" (
     Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\serial" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
     Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wmiacpi" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
     Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DisplayEnhancementService" /v "Start" /t REG_DWORD /d "3" /f >nul 2>&1
-    Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\acpiex" /v "Start" /t REG_DWORD /d "2" /f >nul 2>&1
+    Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\acpiex" /v "Start" /t REG_DWORD /d "0" /f >nul 2>&1
 	reg add "HKLM\System\CurrentControlSet\Control\Class\{4D36E96C-E325-11CE-BFC1-08002BE10318}" /v "UpperFilters" /t REG_MULTI_SZ /d "ksthunk" /f
 	reg add "HKLM\System\CurrentControlSet\Control\Class\{6BDD1FC6-810F-11D0-BEC7-08002BE2092F}" /v "UpperFilters" /t REG_MULTI_SZ /d "ksthunk" /f
     Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d "0" /f
     Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\" /v "PlatformAoAcOverride" /t REG_DWORD /d "0" /f
     powercfg /setactive 381b4222-f694-41f0-9685-ff5bb260df2e
-	del C:\PostInstall\Services\SapphireOS-Default-Services.reg
-	Echo "Backing up Services"
-	set BACKUP="C:\PostInstall\services\SapphireOS-Default-services.reg"
-	echo Windows Registry Editor Version 5.00 >>%BACKUP%
-
-	for /f "delims=" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services"') do (
-		for /f "tokens=3" %%b in ('reg query "%%~a" /v "Start" 2^>nul') do (
-			for /l %%c in (0,1,4) do (
-				if "%%b"=="0x%%c" (
-					echo. >>%BACKUP%
-					echo [%%~a] >>%BACKUP%
-					echo "Start"=dword:0000000%%c >>%BACKUP%
-				) 
-			) 
-		) 
-	) >nul 2>&1
-	cls
 )
 ) else (
     Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DisplayEnhancementService" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
-    Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d "1" /f >nul 2>&1
     Reg.exe add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wmiacpi" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 	Echo "Disabling powersaving features"
 	for %%a in (
@@ -769,6 +589,24 @@ cmd /c "start C:\Windows\explorer.exe"
 taskkill /f /im explorer.exe >nul 2>&1
 taskkill /f /im explorer.exe >nul 2>&1
 cmd /c "start C:\Windows\explorer.exe"
+cls
+
+del C:\PostInstall\Services\SapphireOS-Default-Services.reg
+Echo "Backing up Services"
+set BACKUP="C:\PostInstall\services\SapphireOS-Default-services.reg"
+echo Windows Registry Editor Version 5.00 >>%BACKUP%
+
+for /f "delims=" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Services"') do (
+	for /f "tokens=3" %%b in ('reg query "%%~a" /v "Start" 2^>nul') do (
+		for /l %%c in (0,1,4) do (
+			if "%%b"=="0x%%c" (
+				echo. >>%BACKUP%
+				echo [%%~a] >>%BACKUP%
+				echo "Start"=dword:0000000%%c >>%BACKUP%
+			) 
+		) 
+	) 
+) >nul 2>&1
 cls
 
 Echo "fixing languages if needed"
