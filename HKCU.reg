@@ -12,6 +12,8 @@ Windows Registry Editor Version 5.00
 "InsightsEnabled"=dword:00000000
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize]
 "EnableTransparency"=dword:00000000
+[HKEY_CURRENT_USER\SOFTWARE\SapphireTool]
+"Win32PrioritySeparation"=dword:0000002a
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments]
 "SaveZoneInformation"=dword:00000001
 [HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\AppCompat]
@@ -59,7 +61,6 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell]
 "FolderType"="NotSpecified"
 [HKEY_CURRENT_USER\Control Panel\Desktop]
-"HungAppTimeout"="2000"
 "WaitToKillAppTimeOut"="2000"
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Multimedia\Audio]
 "UserDuckingPreference"=dword:00000003
@@ -79,14 +80,19 @@ Windows Registry Editor Version 5.00
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Orchestrator\UScheduler\OutlookUpdate]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Orchestrator\UScheduler\CrossDeviceUpdate]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Orchestrator\UScheduler\EdgeUpdate]
-Windows Registry Editor Version 5.00
-[HKEY_CURRENT_USER\Control Panel\Mouse]
-"RawMouseThrottleDuration"=dword:00000014
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "HideFileExt"=dword:00000000
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings]
 "IsDynamicSearchBoxEnabled"=dword:00000000
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications]
-"GlobalUserDisabled"=dword:00000000
+"GlobalUserDisabled"=dword:00000001
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search]
 "BackgroundAppGlobalToggle"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings]
+"TaskbarEndTask"=dword:00000001
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CrossDeviceResume\Configuration]
+"IsResumeAllowed"=dword:00000000
+[HKEY_CURRENT_USER\Control Panel\Mouse]
+"RawMouseThrottleEnabled"=dword:00000001
+"RawMouseThrottleForced"=dword:00000001
+"RawMouseThrottleDuration"=dword:00000014
